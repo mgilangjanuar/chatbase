@@ -1,38 +1,75 @@
+@import '~antd/dist/antd.min.css';
+
+body, div.ant-typography, .ant-typography p {
+  font-size: 16px;
+}
+
+body {
+  overflow-x: hidden;
+}
+
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+  min-height: 100vh;
+  background: #fff;
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  position: relative;
+  z-index: 10;
+  max-width: 100%;
+  background: #ffffff;
+  /* box-shadow: 0 2px 8px #f0f1f2; */
+  font-size: 1.4em;
+  font-weight: bolder;
+  padding: 0 15px;
 }
 
-.App-link {
-  color: #61dafb;
+.App-header img {
+  width: 38px;
+  margin: 0 9px 3px 0;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.App-header a {
+  color: #000;
+}
+
+.main-wrapper {
+  position: relative;
+  padding: 24px 18px;
+}
+
+.App-footer {
+  position: relative;
+  clear: both;
+  color: #fff6;
+  font-size: 14px;
+  line-height: 1.5;
+  background-color: #000;
+  margin-top: 80px;
+  text-align: center;
+}
+
+.ant-card {
+  width: 100%;
+}
+
+.App-layout, .ant-layout {
+  background-color: #fff;
+}
+
+@media (max-width: 768px) {
+  .cs-main-container--responsive .cs-conversation-list .cs-conversation__content, .cs-main-container--responsive .cs-sidebar .cs-conversation-list .cs-conversation__content {
+    display: flex !important;
   }
-  to {
-    transform: rotate(360deg);
+}
+
+@media (max-width: 576px) {
+  .cs-main-container--responsive .cs-search {
+    display: flex !important;
   }
+}
+
+.cs-message-group--outgoing .cs-message-group__messages .cs-message .cs-message__content {
+  background-color: #40a9ff !important;
+  color: #ffffff !important;
 }

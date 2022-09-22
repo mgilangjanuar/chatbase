@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "ChatBase",
+  "name": "A lightweight chat app with Supabase",
   "icons": [
     {
       "src": "favicon.ico",
