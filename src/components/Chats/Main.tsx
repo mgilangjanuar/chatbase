@@ -15,7 +15,10 @@ interface Props {
 
 export default function ({ toggle, user }: Props) {
   const { init, payload } = useSubscription()
-  const { loadingMessage } = useHandleConversationsData(user, payload)
+  const [unreadCount, setUnreadCount] = useState<{[id: string]: number}>()
+
+  const { loadingMessage } = useHandleConversationsData(
+    user, payload, unreadCount, setUnreadCount)
 
   const [sidebarVisible, setSidebarVisible] = useState(window.innerWidth < 576)
   const { style } = useChatStyles(sidebarVisible)
@@ -33,6 +36,8 @@ export default function ({ toggle, user }: Props) {
       user={user}
       toggle={toggle}
       payload={payload}
+      unreadCount={unreadCount}
+      setUnreadCount={setUnreadCount}
       handleConversationClick={useCallback(() => {
         if (sidebarVisible) {
           setSidebarVisible(false)

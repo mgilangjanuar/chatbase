@@ -7,7 +7,12 @@ import { UserProfile } from '../utils/types'
 import useMessages from './useMessages'
 import useRooms from './useRooms'
 
-export default function (user?: UserProfile, payload?: SupabaseRealtimePayload<any>) {
+export default function (
+  user?: UserProfile,
+  payload?: SupabaseRealtimePayload<any>,
+  unreadCount?: {[id: string]: number},
+  setUnreadCount?: (unreadCount: any) => void) {
+
   const {
     getUser,
     addConversation,
@@ -106,7 +111,9 @@ export default function (user?: UserProfile, payload?: SupabaseRealtimePayload<a
       if (payload.eventType === 'INSERT') {
         (async () => {
           const message = payload.new
-          if (message.profile_id === user?.id) return
+          if (message.profile_id === user?.id) {
+            return setUnreadCount?.({ ...unreadCount || {}, [message.room_id]: 0 })
+          }
 
           if (activeConversation && payload.new.room_id === activeConversation?.id) {
             addMessage(new ChatMessage<MessageContentType.TextPlain>({

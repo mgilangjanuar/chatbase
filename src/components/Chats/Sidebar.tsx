@@ -14,21 +14,24 @@ interface Props {
   toggle: React.FC,
   user?: UserProfile,
   payload?: SupabaseRealtimePayload<any>,
-  style?: ChatStyles,
-  handleConversationClick: () => void
+  unreadCount?: { [id: string]: number },
+  setUnreadCount: (unreadCount: any) => void,
+  handleConversationClick: () => void,
+  style?: ChatStyles
 }
 
 export default function ({
   toggle: Toggle,
   user,
   payload,
+  unreadCount,
+  setUnreadCount,
   handleConversationClick,
   style
 }: Props) {
 
   const [searchInput, setSearchInput] = useState<string>()
   const [roomUpdated, setRoomUpdated] = useState<Record<string, any>>()
-  const [unreadCount, setUnreadCount] = useState<{[id: string]: number}>()
   const [searchValue] = useDebounce(searchInput, 1000)
   const { search, users, setUsers, messages, setMessages } = useSearch()
 
