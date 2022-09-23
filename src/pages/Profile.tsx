@@ -68,7 +68,7 @@ export default function Profile({ user }: Props) {
             </Form.Item>
           </>} >
             <Typography.Paragraph style={{ marginBottom: '32px', textAlign: 'center' }}>
-              {user?.profile.img_url && <Avatar src={user?.profile.img_url} style={{ width: '128px', height: 'auto', border: 'solid #000 .1px' }} />}
+              {user?.profile.img_url && <Avatar src={user?.profile.img_url} style={{ width: '128px', height: 'auto' }} />}
             </Typography.Paragraph>
           </Popconfirm>
         </Col>

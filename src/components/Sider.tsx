@@ -76,7 +76,6 @@ export default function ({ collapsed, setCollapsed, user }: Props) {
               onClick={async () => {
                 await supabase.auth.signOut()
                 notification.close('info-logout')
-                navigate('/')
               }}>
               Logout
             </Button>

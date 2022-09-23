@@ -1,6 +1,6 @@
 import { Layout } from 'antd'
 import { CSSProperties, useEffect, useState } from 'react'
-import { Route, Routes, useLocation } from 'react-router-dom'
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import SidebarToggle from '../components/SidebarToggle'
 import Sider from '../components/Sider'
 import useUser from '../hooks/useUser'
@@ -16,6 +16,7 @@ export default function () {
   const { setupUser, user, loading } = useUser()
   const [collapsed, setCollapsed] = useState<boolean>()
   const location = useLocation()
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (location.pathname !== '/') {
@@ -29,6 +30,7 @@ export default function () {
       if (event === 'SIGNED_OUT') {
         setupUser()
         window.sessionStorage.clear()
+        navigate('/')
       }
     })
     setupUser()

@@ -1,4 +1,4 @@
-import { Button, notification } from 'antd'
+import { notification } from 'antd'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../services/supabase'
@@ -91,23 +91,8 @@ export default function () {
             await checkMFA({ ...auth, profile: data[0] })
           }
         } else {
-          if (data[0].deleted_at) {   // handle deleted user
-            notification.warn({
-              message: 'Your account has been deleted',
-              description: 'Click the button below to recover your account',
-              duration: 0,
-              btn: <Button type="primary" onClick={async () => {
-                await supabase.from('chat_profiles').update({
-                  name: auth.user_metadata.full_name,
-                  deleted_at: null
-                }).eq('id', auth.id)
-                window.location.replace('/')
-              }}>Recover</Button>
-            })
-          } else {
-            // update state with existing user
-            await checkMFA({ ...auth, profile: data[0] })
-          }
+          // update state with existing user
+          await checkMFA({ ...auth, profile: data[0] })
         }
       }
     } else {

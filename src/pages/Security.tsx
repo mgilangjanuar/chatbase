@@ -85,7 +85,25 @@ export default function ({ user }: Props) {
           {
             title: 'Device Name',
             dataIndex: 'name',
-            key: 'name'
+            key: 'name',
+            render: (val: string, record: any) => <Space direction="vertical">
+              <span>{val}</span>
+              <Popconfirm title="Are you sure?" onConfirm={async () => {
+                const { error } = await supabase
+                  .from('chat_authenticators')
+                  .delete()
+                  .eq('id', record.id)
+                if (error) {
+                  return notification.error({
+                    message: error.message,
+                    description: error.details
+                  })
+                }
+                setAuthenticators(authenticators?.filter(a => a.id !== record.id))
+              }}>
+                <Button danger icon={<DeleteOutlined />} shape="circle" />
+              </Popconfirm>
+            </Space>
           },
           {
             title: 'ID',
@@ -97,25 +115,11 @@ export default function ({ user }: Props) {
             title: 'Public Key',
             dataIndex: 'credentialPublicKey',
             key: 'credentialPublicKey',
-            render: val => <span style={{ overflowWrap: 'anywhere' }}>{val}</span>
-          },
-          {
-            title: 'Action',
-            render: (_, record) => <Popconfirm title="Are you sure?" onConfirm={async () => {
-              const { error } = await supabase
-                .from('chat_authenticators')
-                .delete()
-                .eq('id', record.id)
-              if (error) {
-                return notification.error({
-                  message: error.message,
-                  description: error.details
-                })
-              }
-              setAuthenticators(authenticators?.filter(a => a.id !== record.id))
-            }}>
-              <Button danger icon={<DeleteOutlined />} shape="circle" />
-            </Popconfirm>
+            render: val => <>
+              <span>-----BEGIN PUBLIC KEY-----</span><br />
+              <span style={{ overflowWrap: 'anywhere' }}>{val}</span><br />
+              <span>-----END PUBLIC KEY-----</span>
+            </>
           }
         ]} />
       </Col>
