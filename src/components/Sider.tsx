@@ -1,4 +1,4 @@
-import { CommentOutlined, HomeOutlined, InfoCircleOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons'
+import { CommentOutlined, HomeOutlined, InfoCircleOutlined, KeyOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons'
 import { Button, Layout, Menu, notification, Space } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../services/supabase'
@@ -41,12 +41,20 @@ export default function ({ collapsed, setCollapsed, user }: Props) {
           label: user ? 'Chats' : 'Home',
           onClick: () => navigate('/')
         },
-        ...user ? [{
-          key: '/profile',
-          icon: <UserOutlined />,
-          label: 'Profile',
-          onClick: () => navigate('/profile')
-        }] : [],
+        ...user ? [
+          {
+            key: '/profile',
+            icon: <UserOutlined />,
+            label: 'Profile',
+            onClick: () => navigate('/profile')
+          },
+          {
+            key: '/security',
+            icon: <KeyOutlined />,
+            label: 'Security',
+            onClick: () => navigate('/security')
+          }
+        ] : [],
         {
           key: '/about',
           icon: <InfoCircleOutlined />,

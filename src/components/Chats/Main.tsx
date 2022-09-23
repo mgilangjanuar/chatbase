@@ -14,7 +14,7 @@ interface Props {
 }
 
 export default function ({ toggle, user }: Props) {
-  const { payload } = useSubscription()
+  const { init, payload } = useSubscription()
   const { loadingMessage } = useHandleConversationsData(user, payload)
 
   const [sidebarVisible, setSidebarVisible] = useState(window.innerWidth < 576)
@@ -25,6 +25,8 @@ export default function ({ toggle, user }: Props) {
       setSidebarVisible(window.innerWidth < 576)
     })
   }, [])
+
+  useEffect(init, [])
 
   return <MainContainer style={{ height: '100vh' }} responsive>
     <Sidebar

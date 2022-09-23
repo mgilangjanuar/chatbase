@@ -1,11 +1,11 @@
 import { SupabaseRealtimePayload } from '@supabase/supabase-js'
-import { useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { supabase } from '../services/supabase'
 
 export default function () {
   const [payload, setPayload] = useState<SupabaseRealtimePayload<any>>()
 
-  useEffect(() => {
+  const init = useCallback(() => {
     const s = supabase
       .from('*')
       .on('*', (payload) => {
@@ -18,5 +18,5 @@ export default function () {
     console.log(new Date().getTime(), 'main:*:created', s)
   }, [])
 
-  return { payload }
+  return { init, payload }
 }

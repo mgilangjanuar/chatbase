@@ -1,6 +1,8 @@
 import { Avatar, Button, Col, Divider, Form, Input, Layout, notification, Popconfirm, Row, Space, Typography } from 'antd'
 import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { supabase } from '../services/supabase'
+import { req } from '../utils/request'
 import { UserProfile } from '../utils/types'
 
 interface Props {
@@ -9,6 +11,7 @@ interface Props {
 
 export default function Profile({ user }: Props) {
   const [form] = Form.useForm()
+  const navigate = useNavigate()
 
   useEffect(() => {
     form.setFieldsValue(user?.profile)
@@ -29,20 +32,12 @@ export default function Profile({ user }: Props) {
 
   const remove = async () => {
     try {
-      // await supabase.from('chat_messages').update({ profile_id: null }).eq('profile_id', user?.id)
-      // await supabase.from('chat_rooms').delete().eq('admin_id', user?.id)
-      const { error } = await supabase.from('chat_profiles').update({
-        deleted_at: new Date().toISOString(),
-        name: '[DELETED USER]'
-      }).eq('id', user?.id)
-      if (error) throw error
-
-      notification.success({ message: 'User removed!' })
-
       const { error: errLogout } = await supabase.auth.signOut()
       if (errLogout) throw errLogout
 
-      window.location.replace('/')
+      await req.post('/account/remove')
+      notification.success({ message: 'User removed!' })
+      navigate('/')
     } catch (error: any) {
       notification.error({
         message: error.message,
@@ -78,9 +73,6 @@ export default function Profile({ user }: Props) {
           </Popconfirm>
         </Col>
         <Col span={24} sm={16} md={12} lg={9}>
-          {/* <Form.Item label="UID" name="id">
-            <Input disabled />
-          </Form.Item> */}
           <Form.Item label="Name" name="name" required rules={[
             { required: true, message: 'Please input your name' }]}>
             <Input />
@@ -91,7 +83,7 @@ export default function Profile({ user }: Props) {
           </Form.Item>
           <Form.Item>
             <Space>
-              <Popconfirm title="Are you sure to delete your profile?" onConfirm={remove}>
+              <Popconfirm title="Are you sure to delete your account?" onConfirm={remove}>
                 <Button danger shape="round">Delete User</Button>
               </Popconfirm>
               <Button shape="round" type="primary" htmlType="submit">Update</Button>

@@ -31,7 +31,7 @@ export default function ({ user, style, sidebarVisible, setSidebarVisible }: Pro
     {activeConversation && <ConversationHeader>
       <ConversationHeader.Back onClick={() => setSidebarVisible(!sidebarVisible)} />
       <Avatar src={isPersonal ? opponent?.avatar : activeConversation?.data.img_url} name={name} />
-      <ConversationHeader.Content userName={name} info={opponent?.presence.description} />
+      <ConversationHeader.Content userName={name} info={opponent?.username} />
       <ConversationHeader.Actions>
       </ConversationHeader.Actions>
     </ConversationHeader>}

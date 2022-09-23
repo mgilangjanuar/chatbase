@@ -1,7 +1,7 @@
 import { User } from '@supabase/supabase-js'
 
 export interface UserProfile extends User {
-  profile: Record<string, string>
+  profile: Record<string, any>
 }
 
 export interface ChatStyles {

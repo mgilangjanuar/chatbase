@@ -8,13 +8,12 @@ export default function () {
 
   useEffect(() => {
     setTimeout(() => {
-      console.log(user)
       if (user) {
         window.location.replace('/')
       } else {
         setUser(supabase.auth.user())
       }
-    }, 500)
+    }, 1000)
   }, [user])
 
   return <Layout className="main-wrapper" style={{ textAlign: 'center', paddingTop: '200px' }}>
