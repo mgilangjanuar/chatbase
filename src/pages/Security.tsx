@@ -58,7 +58,7 @@ export default function ({ user }: Props) {
       Activate MFA
     </Typography.Title>
     <Typography.Paragraph type="secondary">
-      Save your trusted devices for your next login.
+      Save your trusted devices to activate multi-factor authentication.
     </Typography.Paragraph>
     <Divider />
 
@@ -116,9 +116,10 @@ export default function ({ user }: Props) {
             dataIndex: 'credentialPublicKey',
             key: 'credentialPublicKey',
             render: val => <>
-              <span>-----BEGIN PUBLIC KEY-----</span><br />
-              <span style={{ overflowWrap: 'anywhere' }}>{val}</span><br />
-              <span>-----END PUBLIC KEY-----</span>
+              <span></span>
+              <span style={{ overflowWrap: 'anywhere' }}>
+                -----BEGIN PUBLIC KEY----- {val} -----END PUBLIC KEY-----
+              </span>
             </>
           }
         ]} />

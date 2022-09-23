@@ -12,6 +12,7 @@ export default function () {
 
   const { auth: authentication } = useWebAuthn((user, err) => {
     if (err) {
+      setUser(undefined)
       return notification.error({
         message: 'Error',
         description: err.message || err

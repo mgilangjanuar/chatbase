@@ -80,9 +80,9 @@ export default function ({
   const { createOrSelectRoomByUser, selectRoomByMessage } = useCreateOrSelectRoom({ user, setConversation })
 
   return <Sidebar position="left" scrollable style={style?.sidebarStyle || {}}>
-    <div style={{ display: 'flex', flexDirection: 'row', padding: '5px 8px 5px 0' }}>
-      <Toggle style={{ paddingTop: '8px' }} />
-      <Search style={{ flexGrow: 1 }} placeholder="Search..." onChange={setSearchInput} onClearClick={() => setSearchInput(undefined)} />
+    <div style={{ display: 'flex', flexDirection: 'row' }}>
+      <Toggle style={{ margin: '17px 0 17px 18px' }} />
+      <Search style={{ flexGrow: 1, marginRight: '23px' }} placeholder="Search..." onChange={setSearchInput} onClearClick={() => setSearchInput(undefined)} />
     </div>
 
     {users === null && messages === null ? <ConversationList>

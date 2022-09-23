@@ -1,6 +1,5 @@
 import { Avatar, Button, Col, Divider, Form, Input, Layout, notification, Popconfirm, Row, Space, Typography } from 'antd'
 import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { supabase } from '../services/supabase'
 import { req } from '../utils/request'
 import { UserProfile } from '../utils/types'
@@ -11,7 +10,6 @@ interface Props {
 
 export default function Profile({ user }: Props) {
   const [form] = Form.useForm()
-  const navigate = useNavigate()
 
   useEffect(() => {
     form.setFieldsValue(user?.profile)
@@ -37,7 +35,6 @@ export default function Profile({ user }: Props) {
 
       await req().post('/account/remove')
       notification.success({ message: 'User removed!' })
-      navigate('/')
     } catch (error: any) {
       notification.error({
         message: error.message,

@@ -13,6 +13,7 @@ export default async function (req: Request, res: Response) {
 
   await supabase.from('chat_messages').delete().eq('profile_id', userAuth.id)
   await supabase.from('chat_rooms').update({ admin_id: null }).eq('admin_id', userAuth.id)
+  await supabase.from('chat_authenticators').delete().eq('profile_id', userAuth.id)
   await supabase.from('chat_profiles').delete().eq('id', userAuth.id)
   await supabase.auth.api.deleteUser(userAuth.id)
   return res.send({ accepted: true })

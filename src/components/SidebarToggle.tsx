@@ -1,6 +1,6 @@
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
-import React, { CSSProperties } from 'react'
+import { CSSProperties } from 'react'
 
 interface Props {
   collapsed: boolean,
