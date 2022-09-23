@@ -20,16 +20,18 @@ export default function ({ collapsed, setCollapsed, user }: Props) {
     breakpoint="md"
     onBreakpoint={setCollapsed}
     collapsible>
-    <Space style={{
-      height: '32px',
-      margin: '15px',
-      color: '#fff',
-      fontSize: '1.15em',
-      fontWeight: 'bold'
-    }}>
-      <img src="/logo192.png" style={{ width: '30px', height: 'auto' }} />
-      <span>ChatBase</span>
-    </Space>
+    <a href="/">
+      <Space style={{
+        height: '32px',
+        margin: '15px',
+        color: '#fff',
+        fontSize: '1.15em',
+        fontWeight: 'bold'
+      }}>
+        <img src="/logo192.png" style={{ width: '30px', height: 'auto' }} />
+        <span>ChatBase</span>
+      </Space>
+    </a>
     <Menu
       theme="dark"
       mode="inline"

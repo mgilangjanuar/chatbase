@@ -1,5 +1,5 @@
 import { Layout } from 'antd'
-import { useEffect, useState } from 'react'
+import { CSSProperties, useEffect, useState } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import SidebarToggle from '../components/SidebarToggle'
 import Sider from '../components/Sider'
@@ -34,7 +34,7 @@ export default function () {
     setupUser()
   }, [])
 
-  const Toggle = () => <SidebarToggle collapsed={!!collapsed} setCollapsed={setCollapsed} />
+  const Toggle = ({ style }: { style?: CSSProperties }) => <SidebarToggle style={style} collapsed={!!collapsed} setCollapsed={setCollapsed} />
 
   const HeaderToggle = () => !user || [
     '/about', '/profile', '/security'

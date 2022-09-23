@@ -1,7 +1,6 @@
 import { Avatar, Conversation, ConversationList, Search, Sidebar } from '@chatscope/chat-ui-kit-react'
 import { Conversation as CoversationUChat, useChat } from '@chatscope/use-chat'
 import { SupabaseRealtimePayload } from '@supabase/supabase-js'
-import { Space } from 'antd'
 import { useEffect, useState } from 'react'
 import { useDebounce } from 'use-debounce'
 import useCreateOrSelectRoom from '../../hooks/useCreateOrSelectRoom'
@@ -11,7 +10,7 @@ import ResultMessages from './ResultMessages'
 import ResultUsers from './ResultUsers'
 
 interface Props {
-  toggle: React.FC,
+  toggle: React.FC<any>,
   user?: UserProfile,
   payload?: SupabaseRealtimePayload<any>,
   unreadCount?: { [id: string]: number },
@@ -81,10 +80,10 @@ export default function ({
   const { createOrSelectRoomByUser, selectRoomByMessage } = useCreateOrSelectRoom({ user, setConversation })
 
   return <Sidebar position="left" scrollable style={style?.sidebarStyle || {}}>
-    <Space size={0} style={{ padding: '2px 0' }}>
-      <Toggle />
-      <Search placeholder="Search..." onChange={setSearchInput} onClearClick={() => setSearchInput(undefined)} />
-    </Space>
+    <div style={{ display: 'flex', flexDirection: 'row', padding: '5px 8px 5px 0' }}>
+      <Toggle style={{ paddingTop: '8px' }} />
+      <Search style={{ flexGrow: 1 }} placeholder="Search..." onChange={setSearchInput} onClearClick={() => setSearchInput(undefined)} />
+    </div>
 
     {users === null && messages === null ? <ConversationList>
       {conversations.map(c => {
