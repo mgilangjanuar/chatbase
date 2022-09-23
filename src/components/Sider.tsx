@@ -1,5 +1,6 @@
 import { CommentOutlined, HomeOutlined, InfoCircleOutlined, KeyOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons'
 import { Button, Layout, Menu, notification, Space } from 'antd'
+import { CSSProperties } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../services/supabase'
 import { UserProfile } from '../utils/types'
@@ -63,24 +64,30 @@ export default function ({ collapsed, setCollapsed, user }: Props) {
           label: 'About',
           onClick: () => navigate('/about')
         },
-        ...user ? [{
-          key: '99',
-          icon: <LogoutOutlined />,
-          label: 'Logout',
-          danger: true,
-          onClick: () => notification.info({
-            key: 'info-logout',
-            message: 'Logout',
-            description: 'Are you sure want to logout?',
-            btn: <Button icon={<LogoutOutlined />} danger
-              onClick={async () => {
-                await supabase.auth.signOut()
-                notification.close('info-logout')
-              }}>
-              Logout
-            </Button>
-          }),
-        }] : [],
+        ...user ? [
+          {
+            key: '99',
+            icon: <LogoutOutlined />,
+            label: 'Logout',
+            style: {
+              bottom: '10px',
+              position: 'absolute',
+            } as CSSProperties,
+            danger: true,
+            onClick: () => notification.info({
+              key: 'info-logout',
+              message: 'Logout',
+              description: 'Are you sure want to logout?',
+              btn: <Button icon={<LogoutOutlined />} danger
+                onClick={async () => {
+                  await supabase.auth.signOut()
+                  notification.close('info-logout')
+                }}>
+                Logout
+              </Button>
+            }),
+          }
+        ] : []
       ]}
     />
   </Layout.Sider>
