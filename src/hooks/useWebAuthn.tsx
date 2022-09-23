@@ -12,10 +12,10 @@ export default function (onFinish: (user: UserProfile, err?: any) => void, user?
 
     setLoading(true)
     try {
-      const { data: options } = await req.post('/webauthn/register')
+      const { data: options } = await req().post('/webauthn/register')
       const resp: RegistrationCredentialJSON = await startRegistration(options)
 
-      const { data: verification } = await req.post('/webauthn/verifyRegister', {
+      const { data: verification } = await req().post('/webauthn/verifyRegister', {
         device_name: name, ...resp })
       if (!verification.verified) {
         throw { message: 'Verification failed' }
@@ -33,10 +33,10 @@ export default function (onFinish: (user: UserProfile, err?: any) => void, user?
 
     setLoading(true)
     try {
-      const { data: options } = await req.post('/webauthn/auth')
+      const { data: options } = await req().post('/webauthn/auth')
       const resp: AuthenticationCredentialJSON = await startAuthentication(options)
 
-      const { data: verification } = await req.post('/webauthn/verifyAuth', resp)
+      const { data: verification } = await req().post('/webauthn/verifyAuth', resp)
       if (!verification.verified) {
         throw { message: 'Verification failed' }
       }

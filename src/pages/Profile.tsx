@@ -35,7 +35,7 @@ export default function Profile({ user }: Props) {
       const { error: errLogout } = await supabase.auth.signOut()
       if (errLogout) throw errLogout
 
-      await req.post('/account/remove')
+      await req().post('/account/remove')
       notification.success({ message: 'User removed!' })
       navigate('/')
     } catch (error: any) {

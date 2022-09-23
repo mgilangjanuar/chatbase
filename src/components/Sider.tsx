@@ -67,12 +67,14 @@ export default function ({ collapsed, setCollapsed, user }: Props) {
           label: 'Logout',
           danger: true,
           onClick: () => notification.info({
+            key: 'info-logout',
             message: 'Logout',
             description: 'Are you sure want to logout?',
             btn: <Button icon={<LogoutOutlined />} danger
               onClick={async () => {
                 await supabase.auth.signOut()
-                window.location.replace('/')
+                notification.close('info-logout')
+                navigate('/')
               }}>
               Logout
             </Button>

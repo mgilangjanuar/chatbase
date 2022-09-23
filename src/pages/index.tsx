@@ -10,11 +10,10 @@ import Home from './Home'
 import Login from './Login'
 import NotFound from './NotFound'
 import Profile from './Profile'
-import Redirect from './Redirect'
 import Security from './Security'
 
 export default function () {
-  const { user, loading } = useUser()
+  const { setupUser, user, loading } = useUser()
   const [collapsed, setCollapsed] = useState<boolean>()
   const location = useLocation()
 
@@ -23,6 +22,17 @@ export default function () {
       supabase.removeAllSubscriptions()
     }
   }, [location.pathname])
+
+  useEffect(() => {
+    supabase.auth.onAuthStateChange(async (event) => {
+      if (event === 'SIGNED_IN') setupUser()
+      if (event === 'SIGNED_OUT') {
+        setupUser()
+        window.sessionStorage.clear()
+      }
+    })
+    setupUser()
+  }, [])
 
   const Toggle = () => <SidebarToggle collapsed={!!collapsed} setCollapsed={setCollapsed} />
 
@@ -41,7 +51,6 @@ export default function () {
           <Route path="/" element={<Home toggle={Toggle} user={user} loading={loading} />} />
           <Route path="/about" element={<About />} />
           {!user && <Route path="/login" element={<Login />} />}
-          {!user && <Route path="/redirect" element={<Redirect />} />}
           {user && <Route path="/profile" element={<Profile user={user} />} />}
           {user && <Route path="/security" element={<Security user={user} />} />}
           <Route path="*" element={<NotFound />} />
