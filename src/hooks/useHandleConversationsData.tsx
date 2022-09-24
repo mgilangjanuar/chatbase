@@ -26,6 +26,15 @@ export default function (
 
   const { rooms, users } = useRooms()
 
+  useEffect(() => {
+    if (!activeConversation) {
+      const conv = window.localStorage.getItem('activeConversation')
+      if (conv) {
+        setActiveConversation(conv)
+      }
+    }
+  }, [activeConversation])
+
   // initiate current user
   useEffect(() => {
     if (user) {
@@ -90,17 +99,31 @@ export default function (
     if (activeConversation && messages !== undefined) {
       messages.map(message => {
         if (currentMessages.find(g => g.messages.find(m => m.id === message.id))) return
-        addMessage(new ChatMessage<MessageContentType.TextPlain>({
-          id: message.id,
-          contentType: MessageContentType.TextPlain,
-          status: MessageStatus.DeliveredToDevice,
-          senderId: message.profile_id,
-          direction: message.profile_id === user?.id ? MessageDirection.Outgoing : MessageDirection.Incoming,
-          content: {
-            content: message.message
-          },
-          createdTime: message.created_at
-        }), activeConversation.id, false)
+        if (message.type === 'text') {
+          addMessage(new ChatMessage<MessageContentType.TextPlain>({
+            id: message.id,
+            contentType: MessageContentType.TextPlain,
+            status: MessageStatus.DeliveredToDevice,
+            senderId: message.profile_id,
+            direction: message.profile_id === user?.id ? MessageDirection.Outgoing : MessageDirection.Incoming,
+            content: {
+              content: message.message
+            },
+            createdTime: message.created_at
+          }), activeConversation.id, false)
+        } else if (message.type === 'file') {
+          addMessage(new ChatMessage<MessageContentType.Attachment>({
+            id: message.id,
+            contentType: MessageContentType.Attachment,
+            status: MessageStatus.DeliveredToDevice,
+            senderId: message.profile_id,
+            direction: message.profile_id === user?.id ? MessageDirection.Outgoing : MessageDirection.Incoming,
+            content: {
+              content: message.message
+            },
+            createdTime: message.created_at
+          }), activeConversation.id, false)
+        }
       })
     }
   }, [messages])
@@ -180,6 +203,7 @@ export default function (
               description: message.message,
               onClick: () => {
                 setActiveConversation(message.room_id)
+                window.localStorage.setItem('activeConversation', message.room_id)
                 notification.close(`new:${message.room_id}`)
               }
             })

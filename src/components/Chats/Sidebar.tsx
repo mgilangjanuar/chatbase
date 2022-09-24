@@ -74,6 +74,7 @@ export default function ({
 
   const setConversation = (conversation: CoversationUChat | string) => {
     setActiveConversation(typeof conversation === 'string' ? conversation : conversation.id)
+    window.localStorage.setItem('activeConversation', typeof conversation === 'string' ? conversation : conversation.id)
     handleConversationClick()
   }
 

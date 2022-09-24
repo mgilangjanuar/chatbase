@@ -109,7 +109,7 @@ export default function ({ user }: Props) {
             title: 'ID',
             dataIndex: 'credential_id',
             key: 'credential_id',
-            render: val => <span style={{ overflowWrap: 'anywhere' }}>{val}</span>
+            render: val => <span style={{ overflowWrap: 'anywhere' }}>{val.slice(0, 40)}...{val.slice(-40)}</span>
           },
           {
             title: 'Public Key',
@@ -118,7 +118,7 @@ export default function ({ user }: Props) {
             render: val => <>
               <span></span>
               <span style={{ overflowWrap: 'anywhere' }}>
-                -----BEGIN PUBLIC KEY----- {val} -----END PUBLIC KEY-----
+                -----BEGIN PUBLIC KEY-----<br />{val.slice(0, 40)}...{val.slice(-40)}<br />-----END PUBLIC KEY-----
               </span>
             </>
           }
