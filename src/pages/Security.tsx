@@ -48,9 +48,13 @@ export default function ({ user }: Props) {
   }, [authenticators])
 
   useEffect(() => {
-    const { client, os, device } = new DeviceDetector().parse(navigator.userAgent)
-    const name = `${device?.type[0].toUpperCase()}${device?.type.slice(1)}: ${os?.name} - ${client?.name}`
-    setDeviceName(name)
+    try {
+      const { client, os, device } = new DeviceDetector().parse(navigator.userAgent)
+      const name = `${device?.type[0].toUpperCase()}${device?.type.slice(1)}: ${os?.name} - ${client?.name}`
+      setDeviceName(name)
+    } catch (error) {
+      setDeviceName('Unknown device')
+    }
   }, [])
 
   return <Layout className="main-wrapper">
