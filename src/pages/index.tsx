@@ -1,4 +1,4 @@
-import { Layout } from 'antd'
+import { Layout, notification } from 'antd'
 import { CSSProperties, useEffect, useState } from 'react'
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import SidebarToggle from '../components/SidebarToggle'
@@ -25,7 +25,12 @@ export default function () {
 
   useEffect(() => {
     supabase.auth.onAuthStateChange(async (event) => {
-      if (event === 'SIGNED_IN') setupUser()
+      if (event === 'SIGNED_IN') {
+        setupUser()
+        notification.success({
+          message: 'Welcome back!'
+        })
+      }
       if (event === 'SIGNED_OUT') {
         setupUser()
         window.sessionStorage.clear()

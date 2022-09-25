@@ -1,6 +1,5 @@
 import { notification } from 'antd'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { supabase } from '../services/supabase'
 import { UserProfile } from '../utils/types'
 import useWebAuthn from './useWebAuthn'
@@ -8,7 +7,7 @@ import useWebAuthn from './useWebAuthn'
 export default function () {
   const [user, setUser] = useState<UserProfile>()
   const [loading, setLoading] = useState<boolean>(true)
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 
   const { auth: authentication } = useWebAuthn((user, err) => {
     if (err) {
@@ -18,10 +17,7 @@ export default function () {
         description: err.message || err
       })
     }
-    setUser(user)
-    return notification.success({
-      message: 'Welcome back!'
-    })
+    return setUser(user)
   })
 
   const checkMFA = async (user?: UserProfile) => {
@@ -46,15 +42,15 @@ export default function () {
       return authentication(user)
     }
 
-    notification.info({
-      key: 'mfa-info',
-      message: 'Please register a device',
-      description: 'For security reasons, please add your device as multi-factor authentication.',
-      onClick: () => {
-        navigate('/security'),
-        notification.close('mfa-info')
-      }
-    })
+    // notification.info({
+    //   key: 'mfa-info',
+    //   message: 'Please register a device',
+    //   description: 'For security reasons, please add your device as multi-factor authentication.',
+    //   onClick: () => {
+    //     navigate('/security'),
+    //     notification.close('mfa-info')
+    //   }
+    // })
     return setUser(user)
   }
 

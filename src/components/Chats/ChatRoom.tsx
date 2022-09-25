@@ -43,7 +43,7 @@ export default function ({ user, style, sidebarVisible, setSidebarVisible }: Pro
 
       <MessageList typingIndicator={null}>
         {activeConversation && currentMessages.map((g) => <MessageGroup key={g.id} direction={g.direction}>
-          <Avatar src={getUser(g.senderId)?.avatar} />
+          {/* <Avatar src={getUser(g.senderId)?.avatar} /> */}
           <MessageGroup.Messages>
             {g.messages.map((m: ChatMessage<MessageContentType>) => {
               if (m.contentType === MessageContentType.TextPlain) {
@@ -62,7 +62,6 @@ export default function ({ user, style, sidebarVisible, setSidebarVisible }: Pro
                 })()
                 return <Message key={m.id} model={{
                   type: 'custom',
-                  // message: (m.content as TextContent).content,
                   direction: m.direction,
                   position: 'normal'
                 }}>
@@ -74,7 +73,6 @@ export default function ({ user, style, sidebarVisible, setSidebarVisible }: Pro
                       {caption}
                     </Button>
                   </Message.CustomContent>
-                  {/* <Message.HtmlContent html={`<Button onclick="downloadFile('${m.content}')">Download</Button>`} /> */}
                 </Message>
               }
             })}
