@@ -7,7 +7,6 @@ import useUser from '../hooks/useUser'
 import { supabase } from '../services/supabase'
 import About from './About'
 import Home from './Home'
-import Login from './Login'
 import NotFound from './NotFound'
 import Profile from './Profile'
 import Security from './Security'
@@ -52,7 +51,6 @@ export default function () {
         <Routes>
           <Route path="/" element={<Home toggle={Toggle} user={user} loading={loading} />} />
           <Route path="/about" element={<About />} />
-          {!user && <Route path="/login" element={<Login />} />}
           {user && <Route path="/profile" element={<Profile user={user} />} />}
           {user && <Route path="/security" element={<Security user={user} />} />}
           <Route path="*" element={<NotFound />} />
