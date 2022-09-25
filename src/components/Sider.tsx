@@ -62,38 +62,28 @@ export default function ({ collapsed, setCollapsed, user }: Props) {
           icon: <InfoCircleOutlined />,
           label: 'About',
           onClick: () => navigate('/about')
-        }
+        },
+        ...user ? [
+          {
+            key: '99',
+            icon: <LogoutOutlined />,
+            label: 'Logout',
+            danger: true,
+            onClick: () => notification.info({
+              key: 'info-logout',
+              message: 'Logout',
+              description: 'Are you sure want to logout?',
+              btn: <Button icon={<LogoutOutlined />} danger
+                onClick={async () => {
+                  await supabase.auth.signOut()
+                  notification.close('info-logout')
+                }}>
+                Logout
+              </Button>
+            }),
+          }
+        ] : []
       ]}
     />
-
-    {user && <Menu
-      theme="dark"
-      mode="inline"
-      style={!collapsed ? {
-        bottom: '10px',
-        position: 'absolute',
-      } : {}}
-      defaultSelectedKeys={[location.pathname]}
-      items={[
-        {
-          key: '99',
-          icon: <LogoutOutlined />,
-          label: 'Logout',
-          danger: true,
-          onClick: () => notification.info({
-            key: 'info-logout',
-            message: 'Logout',
-            description: 'Are you sure want to logout?',
-            btn: <Button icon={<LogoutOutlined />} danger
-              onClick={async () => {
-                await supabase.auth.signOut()
-                notification.close('info-logout')
-              }}>
-              Logout
-            </Button>
-          }),
-        }
-      ]}
-    />}
   </Layout.Sider>
 }

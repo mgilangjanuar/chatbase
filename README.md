@@ -2,6 +2,23 @@
 
 A minimal web chat application built upon Typescript with [Supabase](https://supabase.com) and [Vercel](https://vercel.com).
 
+[![Watch the video](https://img.youtube.com/vi/Hglg9viFiOY/default.jpg)](https://youtu.be/Hglg9viFiOY)
+
+## Features
+
+- [x] User authentication
+- [x] User profile
+- [x] Search users and rooms
+- [x] Create personal message room
+- [x] Realtime chat
+- [x] Send text messages
+- [x] Send attachment messages
+- [x] WebAuthn as 2FA
+- [ ] Edit messages
+- [ ] Delete messages
+- [ ] Delete conversation rooms
+
+
 ## Setup Guide
 
 ### **Prerequisites**
