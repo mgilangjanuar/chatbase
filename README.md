@@ -81,12 +81,12 @@ Install [Vercel CLI](https://vercel.com/docs/cli) and login with command: `verce
 - Local
 
   - Fill in the environment variables in `.env` file _(see [`.env.example`](./.env.example) for reference)_
-  - Run: `vercel dev`
+  - Run: `vercel dev` or `yarn start`
 
 - Production
 
   - Fill in the environment variables in the Vercel settings page
-  - Run: `vercel --prod`
+  - Run: `vercel --prod` or `yarn run deploy`
 
 
 ## License

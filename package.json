@@ -25,7 +25,8 @@
     "use-debounce": "^8.0.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "vercel dev",
+    "deploy": "vercel --prod",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -64,6 +65,7 @@
     "@types/react-router-dom": "^5.3.3",
     "@typescript-eslint/parser": "^5.37.0",
     "eslint": "^8.23.1",
+    "vercel": "^28.4.2",
     "web-vitals": "^2.1.4",
     "workbox-background-sync": "^6.4.2",
     "workbox-broadcast-update": "^6.4.2",

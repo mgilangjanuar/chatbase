@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import useChatStyles from '../../hooks/useChatStyles'
 import useHandleConversationsData from '../../hooks/useHandleConversationsData'
 import useSubscription from '../../hooks/useSubscription'
+import { supabase } from '../../services/supabase'
 import { UserProfile } from '../../utils/types'
 import ChatRoom from './ChatRoom'
 import Sidebar from './Sidebar'
@@ -29,7 +30,12 @@ export default function ({ toggle, user }: Props) {
     })
   }, [])
 
-  useEffect(init, [])
+  useEffect(() => {
+    init()
+    return () => {
+      supabase.removeAllSubscriptions()
+    }
+  }, [])
 
   return <MainContainer style={{ height: '100vh' }} responsive>
     <Sidebar

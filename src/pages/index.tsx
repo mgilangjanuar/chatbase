@@ -18,18 +18,9 @@ export default function () {
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (location.pathname !== '/') {
-      supabase.removeAllSubscriptions()
-    }
-  }, [location.pathname])
-
-  useEffect(() => {
     supabase.auth.onAuthStateChange(async (event) => {
       if (event === 'SIGNED_IN') {
         setupUser()
-        // notification.success({
-        //   message: 'Welcome back!'
-        // })
       }
       if (event === 'SIGNED_OUT') {
         setupUser()
