@@ -31,13 +31,16 @@ export default function ({ toggle, user }: Props) {
       // document.body.style.height = '100vh'
       // document.body.style.overflowY = 'hidden'
 
-      const vh = window.innerHeight * 0.01
-      const element = document.querySelector('.cs-main-container.main-chat') as HTMLElement
-      if (element) {
-        console.log(vh)
-        element.style.setProperty('--vh', `${vh}px`)
-        // document.body.style.setProperty('--vh', `${vh}px`)
-      }
+      // const vh = window.innerHeight * 0.01
+      // const element = document.querySelector('.cs-main-container.main-chat') as HTMLElement
+      // if (element) {
+      //   console.log(vh)
+      //   element.style.setProperty('--vh', `${vh}px`)
+      //   // document.body.style.setProperty('--vh', `${vh}px`)
+      // }
+
+      const doc = document.documentElement
+      doc.style.setProperty('--app-height', `${window.innerHeight}px`)
     }
     setMaxHeight()
 
