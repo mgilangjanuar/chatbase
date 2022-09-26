@@ -27,14 +27,14 @@ export default function ({ toggle, user }: Props) {
   useEffect(() => {
     const setMaxHeight = () => {
       // document.body.style.height = '100vh'
-      document.body.style.height = 'calc(var(--vh, 1vh) * 100)'
+      document.body.style.overflowY = 'hidden'
 
       const vh = window.innerHeight * 0.01
       const element = document.querySelector('.cs-main-container.main-chat') as HTMLElement
       if (element) {
         console.log(vh)
         element.style.setProperty('--vh', `${vh}px`)
-        document.body.style.setProperty('--vh', `${vh}px`)
+        // document.body.style.setProperty('--vh', `${vh}px`)
       }
     }
     setMaxHeight()
@@ -46,7 +46,7 @@ export default function ({ toggle, user }: Props) {
     })
     return () => {
       // window.removeEventListener('resize', () => {})
-      document.body.style.height = 'auto'
+      document.body.style.overflowY = 'auto'
     }
   }, [])
 
