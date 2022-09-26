@@ -100,31 +100,17 @@ export default function (
     if (activeConversation && messages !== undefined) {
       messages.map(message => {
         if (currentMessages.find(g => g.messages.find(m => m.id === message.id))) return
-        if (message.type === 'text') {
-          addMessage(new ChatMessage<MessageContentType.TextPlain>({
-            id: message.id,
-            contentType: MessageContentType.TextPlain,
-            status: MessageStatus.DeliveredToDevice,
-            senderId: message.profile_id,
-            direction: message.profile_id === user?.id ? MessageDirection.Outgoing : MessageDirection.Incoming,
-            content: {
-              content: message.message
-            },
-            createdTime: message.created_at
-          }), activeConversation.id, false)
-        } else if (message.type === 'file') {
-          addMessage(new ChatMessage<MessageContentType.Attachment>({
-            id: message.id,
-            contentType: MessageContentType.Attachment,
-            status: MessageStatus.DeliveredToDevice,
-            senderId: message.profile_id,
-            direction: message.profile_id === user?.id ? MessageDirection.Outgoing : MessageDirection.Incoming,
-            content: {
-              content: message.message
-            },
-            createdTime: message.created_at
-          }), activeConversation.id, false)
-        }
+        addMessage(new ChatMessage<MessageContentType.TextPlain | MessageContentType.Attachment>({
+          id: message.id,
+          contentType: message.type === 'text' ? MessageContentType.TextPlain : MessageContentType.Attachment,
+          status: MessageStatus.DeliveredToDevice,
+          senderId: message.profile_id,
+          direction: message.profile_id === user?.id ? MessageDirection.Outgoing : MessageDirection.Incoming,
+          content: {
+            content: message.message
+          },
+          createdTime: message.created_at
+        }), activeConversation.id, false)
       })
     }
   }, [messages])
@@ -140,9 +126,9 @@ export default function (
           }
 
           if (activeConversation && payload.new.room_id === activeConversation?.id) {
-            addMessage(new ChatMessage<MessageContentType.TextPlain>({
+            addMessage(new ChatMessage<MessageContentType.TextPlain | MessageContentType.Attachment>({
               id: message.id,
-              contentType: MessageContentType.TextPlain,
+              contentType: message.type === 'text' ? MessageContentType.TextPlain : MessageContentType.Attachment,
               status: MessageStatus.DeliveredToDevice,
               senderId: message.profile_id,
               direction: message.profile_id === user?.id ? MessageDirection.Outgoing : MessageDirection.Incoming,

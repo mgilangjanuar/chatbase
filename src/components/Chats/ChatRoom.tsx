@@ -62,6 +62,19 @@ export default function ({ user, style, sidebarVisible, setSidebarVisible }: Pro
           {window.innerWidth > 576 && <Avatar src={getUser(g.senderId)?.avatar} />}
           <MessageGroup.Messages>
             {g.messages.map((m: ChatMessage<MessageContentType>) => {
+              if (m.content.content === DELETED_MESSAGE_TEXT) {
+                return <Message key={m.id} model={{
+                  type: 'custom',
+                  direction: m.direction,
+                  position: 'normal'
+                }}>
+                  <Message.CustomContent>
+                    <Typography.Text italic type="secondary">
+                      This message has been removed
+                    </Typography.Text>
+                  </Message.CustomContent>
+                </Message>
+              }
               if (m.contentType === MessageContentType.TextPlain) {
                 return <Message key={m.id} model={{
                   type: 'custom',
@@ -69,9 +82,8 @@ export default function ({ user, style, sidebarVisible, setSidebarVisible }: Pro
                   position: 'normal'
                 }}>
                   <Message.CustomContent>
-                    {m.content.content === DELETED_MESSAGE_TEXT ? <Typography.Text italic type="secondary">
-                      This message has been removed
-                    </Typography.Text> : <MessageActions
+                    <MessageActions
+                      direction={m.direction}
                       onEditClick={() => {
                         setMessageInput((m.content as TextContent).content.replace(/^edited\:\ /, ''))
                         setUpdateMessageData(m)
@@ -83,7 +95,7 @@ export default function ({ user, style, sidebarVisible, setSidebarVisible }: Pro
                         <Typography.Text type="secondary" italic>edited: </Typography.Text>
                         {(m.content as TextContent).content.replace('edited: ', '')}
                       </Typography.Text> : m.content.content}
-                    </MessageActions>}
+                    </MessageActions>
                   </Message.CustomContent>
                 </Message>
               } else if (m.contentType === MessageContentType.Attachment) {
@@ -100,12 +112,22 @@ export default function ({ user, style, sidebarVisible, setSidebarVisible }: Pro
                   position: 'normal'
                 }}>
                   <Message.CustomContent>
-                    <Button style={{ background: '#40a9ff', border: 'none', boxShadow: 'none' }} type="primary" onClick={async () => {
-                      const url = await downloadFile((m.content as any).content)
-                      window.open(url as string, '_blank')
-                    }} shape="round" icon={<CloudDownloadOutlined />}>
-                      {caption}
-                    </Button>
+                    <MessageActions onlyDelete
+                      direction={m.direction}
+                      onEditClick={() => {
+                        setMessageInput((m.content as TextContent).content.replace(/^edited\:\ /, ''))
+                        setUpdateMessageData(m)
+                      }}
+                      onRemoveClick={() => {
+                        updateMessage(m, DELETED_MESSAGE_TEXT)
+                      }}>
+                      <Button type="primary" onClick={async () => {
+                        const url = await downloadFile((m.content as any).content)
+                        window.open(url as string, '_blank')
+                      }} shape="round" icon={<CloudDownloadOutlined />}>
+                        {caption}
+                      </Button>
+                    </MessageActions>
                   </Message.CustomContent>
                 </Message>
               }
