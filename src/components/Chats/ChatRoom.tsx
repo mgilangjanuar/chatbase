@@ -43,7 +43,7 @@ export default function ({ user, style, sidebarVisible, setSidebarVisible }: Pro
 
       <MessageList typingIndicator={null}>
         {activeConversation && currentMessages.map((g) => <MessageGroup key={g.id} direction={g.direction}>
-          {/* <Avatar src={getUser(g.senderId)?.avatar} /> */}
+          {window.innerWidth > 576 && <Avatar src={getUser(g.senderId)?.avatar} />}
           <MessageGroup.Messages>
             {g.messages.map((m: ChatMessage<MessageContentType>) => {
               if (m.contentType === MessageContentType.TextPlain) {
