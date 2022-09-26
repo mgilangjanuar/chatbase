@@ -8,7 +8,7 @@ import {
   MessageList
 } from '@chatscope/chat-ui-kit-react'
 import { ChatMessage, MessageContentType, TextContent, useChat } from '@chatscope/use-chat'
-import { Button, Input, Typography } from 'antd'
+import { Button, Input, Space, Typography } from 'antd'
 import moment from 'moment'
 import { useEffect, useRef, useState } from 'react'
 import useSendMessage from '../../hooks/useSendMessage'
@@ -112,22 +112,23 @@ export default function ({ user, style, sidebarVisible, setSidebarVisible }: Pro
                   position: 'normal'
                 }}>
                   <Message.CustomContent>
-                    <MessageActions onlyDelete
-                      direction={m.direction}
-                      onEditClick={() => {
-                        setMessageInput((m.content as TextContent).content.replace(/^edited\:\ /, ''))
-                        setUpdateMessageData(m)
-                      }}
-                      onRemoveClick={() => {
-                        updateMessage(m, DELETED_MESSAGE_TEXT)
-                      }}>
+                    <Space>
                       <Button type="primary" onClick={async () => {
                         const url = await downloadFile((m.content as any).content)
                         window.open(url as string, '_blank')
-                      }} shape="round" icon={<CloudDownloadOutlined />}>
+                      }} shape="circle" icon={<CloudDownloadOutlined />} />
+                      <MessageActions onlyDelete
+                        direction={m.direction}
+                        onEditClick={() => {
+                          setMessageInput((m.content as TextContent).content.replace(/^edited\:\ /, ''))
+                          setUpdateMessageData(m)
+                        }}
+                        onRemoveClick={() => {
+                          updateMessage(m, DELETED_MESSAGE_TEXT)
+                        }}>
                         {caption}
-                      </Button>
-                    </MessageActions>
+                      </MessageActions>
+                    </Space>
                   </Message.CustomContent>
                 </Message>
               }

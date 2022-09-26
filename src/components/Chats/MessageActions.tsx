@@ -11,7 +11,7 @@ interface Props {
 }
 
 export default function ({ children, direction, onlyDelete, onEditClick, onRemoveClick }: Props) {
-  return direction === MessageDirection.Outgoing ? <Popover children={children} placement="bottom" trigger={['contextMenu']} content={<Menu items={[
+  return direction === MessageDirection.Outgoing ? <Popover children={children} placement="bottom" trigger={['click']} content={<Menu items={[
     ...!onlyDelete ? [{
       key: 'edit',
       label: 'Edit',
