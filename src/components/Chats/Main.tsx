@@ -27,6 +27,12 @@ export default function ({ toggle, user }: Props) {
   useEffect(() => {
     window.addEventListener('resize', () => {
       setSidebarVisible(window.innerWidth < 576)
+
+      const vh = window.innerHeight * 0.01
+      const element = document.querySelector('.cs-main-container.main-chat') as HTMLElement
+      if (element) {
+        element.style.setProperty('--vh', `${vh}px`)
+      }
     })
   }, [])
 
@@ -37,7 +43,7 @@ export default function ({ toggle, user }: Props) {
     }
   }, [])
 
-  return <MainContainer style={{ height: '100vh' }} responsive>
+  return <MainContainer className="main-chat" responsive>
     <Sidebar
       user={user}
       toggle={toggle}
