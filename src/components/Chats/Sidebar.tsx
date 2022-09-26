@@ -95,10 +95,11 @@ export default function ({
     {users === null && messages === null ? <ConversationList>
       {conversations.map(c => {
         const [avatar, content] = (() => {
+          const parseLastMessage = (message: string) => message
+            .replace(new RegExp(`^${user?.profile.username}:`), 'me:')
+            .replaceAll('<br>', ' ')
           if (c.data.type === 'personal') {
-            const description = (
-              roomUpdated?.id === c.id ? roomUpdated.last_message : c.description
-            ).replace(new RegExp(`^${user?.profile.username}:`), 'me:')
+            const description = parseLastMessage(roomUpdated?.id === c.id ? roomUpdated.last_message : c.description)
             const participant = c.participants.length > 0 ? c.participants.find(p => p.id !== user?.id) : undefined
             if (participant) {
               const user = getUser(participant.id)
@@ -110,9 +111,9 @@ export default function ({
               }
             }
           } else {
-            const description = (
-              roomUpdated?.id === c.id ? roomUpdated.last_message.replace(new RegExp(`^${user?.profile.username}:`), 'me:') : c.description
-            ).replace(new RegExp(`^${user?.profile.username}:`), 'me:')
+            const description = parseLastMessage(
+              roomUpdated?.id === c.id ? parseLastMessage(
+                roomUpdated.last_message) : c.description)
             return [
               <Avatar src={c.data.img_url} style={style?.conversationAvatarStyle || {}} />,
               <Conversation.Content name={c.data.title || 'Unknown'} lastSenderName={null} info={description} style={style?.conversationContentStyle || {}} />
