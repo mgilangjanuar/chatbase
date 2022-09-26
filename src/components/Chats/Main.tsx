@@ -25,14 +25,20 @@ export default function ({ toggle, user }: Props) {
   const { style } = useChatStyles(sidebarVisible)
 
   useEffect(() => {
-    window.addEventListener('resize', () => {
-      setSidebarVisible(window.innerWidth < 576)
-
+    const setMaxHeight = () => {
       const vh = window.innerHeight * 0.01
       const element = document.querySelector('.cs-main-container.main-chat') as HTMLElement
       if (element) {
+        console.log(vh)
         element.style.setProperty('--vh', `${vh}px`)
       }
+    }
+    setMaxHeight()
+
+    window.addEventListener('resize', () => {
+      setSidebarVisible(window.innerWidth < 576)
+
+      setMaxHeight()
     })
   }, [])
 
