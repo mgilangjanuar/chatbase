@@ -6,6 +6,12 @@ body, div.ant-typography, .ant-typography p {
 
 body {
   overflow-x: hidden;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+}
+
+html {
+  height: -webkit-fill-available;
 }
 
 .App {

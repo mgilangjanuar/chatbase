@@ -1,6 +1,7 @@
 import { CommentOutlined, HomeOutlined, InfoCircleOutlined, KeyOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons'
 import { Button, Layout, Menu, notification, Space } from 'antd'
-import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { supabase } from '../services/supabase'
 import { UserProfile } from '../utils/types'
 
@@ -12,6 +13,11 @@ interface Props {
 
 export default function ({ collapsed, setCollapsed, user }: Props) {
   const navigate = useNavigate()
+  const location = useLocation()
+
+  useEffect(() => {
+    setCollapsed(window.innerWidth < 576)
+  }, [location.pathname])
 
   return <Layout.Sider
     collapsedWidth={0}

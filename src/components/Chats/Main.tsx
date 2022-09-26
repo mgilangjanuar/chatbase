@@ -25,9 +25,11 @@ export default function ({ toggle, user }: Props) {
   const { style } = useChatStyles(sidebarVisible)
 
   useEffect(() => {
+    document.body.style.overflowY = 'hidden'
+
     const setMaxHeight = () => {
       // document.body.style.height = '100vh'
-      document.body.style.overflowY = 'hidden'
+      // document.body.style.overflowY = 'hidden'
 
       const vh = window.innerHeight * 0.01
       const element = document.querySelector('.cs-main-container.main-chat') as HTMLElement
