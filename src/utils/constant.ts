@@ -1,0 +1,1 @@
+export const DELETED_MESSAGE_TEXT = '_This message has been removed_'

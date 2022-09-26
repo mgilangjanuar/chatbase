@@ -14,10 +14,12 @@ A minimal web chat application built upon Typescript with [Supabase](https://sup
 - [x] Send text messages
 - [x] Send attachment messages
 - [x] WebAuthn as 2FA
-- [ ] Edit messages
-- [ ] Delete messages
-- [ ] Delete conversation rooms
-
+- [x] Delete conversation rooms
+- [x] Edit messages
+- [x] Delete messages
+- [ ] Rich media attachment messages
+- [ ] Video call
+- [ ] Audio call
 
 ## Setup Guide
 

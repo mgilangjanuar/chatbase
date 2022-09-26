@@ -3,8 +3,8 @@ import { notification } from 'antd'
 import { supabase, supabaseDownload, supabaseUpload } from '../services/supabase'
 import { UserProfile } from '../utils/types'
 
-export default function (user?: UserProfile) {
-  const { addMessage, activeConversation } = useChat()
+export default function (user?: UserProfile, onFinish?: () => void) {
+  const { addMessage, activeConversation, updateMessage: updateMessageData } = useChat()
 
   const sendMessage = async (msg: string) => {
     if (!activeConversation) {
@@ -16,7 +16,7 @@ export default function (user?: UserProfile) {
     const { data, error } = await supabase
       .from('chat_messages')
       .insert({
-        message: msg,
+        message: msg.trim(),
         room_id: activeConversation.id,
       })
     if (error || !data) {
@@ -43,6 +43,23 @@ export default function (user?: UserProfile) {
       .from('chat_rooms')
       .update({ last_message: `${user?.profile.username}: ${msg}` })
       .eq('id', activeConversation.id)
+    onFinish?.()
+  }
+
+  const updateMessage = async (msg: ChatMessage<MessageContentType.TextPlain>, message: string) => {
+    const { error } = await supabase
+      .from('chat_messages')
+      .update({ message: message.trim() })
+      .eq('id', msg.id)
+    if (error) {
+      return notification.error({
+        message: error.message,
+        description: error.details
+      })
+    }
+    msg.content.content = message.trim()
+    updateMessageData(msg)
+    onFinish?.()
   }
 
   const uploadFile = async (files: FileList | null) => {
@@ -101,8 +118,7 @@ export default function (user?: UserProfile) {
       .from('chat_rooms')
       .update({ last_message: `${user?.profile.username}: File` })
       .eq('id', activeConversation.id)
-
-
+    onFinish?.()
   }
 
   const downloadFile = async (key: string) => {
@@ -114,8 +130,9 @@ export default function (user?: UserProfile) {
       })
     })
     notification.close(key)
+    onFinish?.()
     return URL.createObjectURL(data)
   }
 
-  return { sendMessage, uploadFile, downloadFile }
+  return { sendMessage, updateMessage, uploadFile, downloadFile }
 }

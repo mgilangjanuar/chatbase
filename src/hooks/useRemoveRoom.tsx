@@ -6,16 +6,12 @@ export default function (removeConversation: (id: string, removeMessages: boolea
 
   const remove = async (room: Record<any, any>) => {
     setLoading(true)
-    // const { error } = await supabase
-    //   .from('chat_rooms')
-    //   .delete()
-    //   .eq('id', id)
     const { error } = await supabase
       .from('chat_rooms')
       .delete()
       .eq('id', room.id)
     if (error) throw error
-    window.localStorage.removeItem('conversationId')
+    window.localStorage.removeItem('activeConversation')
     removeConversation(room.id, true)
     onFinish?.()
     return setLoading(false)

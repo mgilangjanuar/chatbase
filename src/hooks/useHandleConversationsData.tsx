@@ -19,6 +19,7 @@ export default function (
     addUser,
     setCurrentUser,
     addMessage,
+    updateMessage,
     activeConversation,
     currentMessages,
     setActiveConversation
@@ -207,6 +208,22 @@ export default function (
                 notification.close(`new:${message.room_id}`)
               }
             })
+          }
+        })()
+      } else if (payload.eventType === 'UPDATE') {
+        (async () => {
+          const message = payload.new
+          let msg: ChatMessage<MessageContentType.TextPlain> | undefined
+          currentMessages?.forEach(g => {
+            g.messages.forEach(m => {
+              if (m.id === message.id) {
+                msg = m
+              }
+            })
+          })
+          if (msg?.content) {
+            msg.content.content = message.message
+            updateMessage(msg)
           }
         })()
       }

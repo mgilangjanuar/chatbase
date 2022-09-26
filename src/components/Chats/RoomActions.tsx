@@ -11,7 +11,7 @@ export default function ({ onFinish }: Props) {
   const { removeConversation, activeConversation } = useChat()
   const { remove: removeRoom } = useRemoveRoom(removeConversation, onFinish)
 
-  return <Popover trigger={['click', 'hover']} content={
+  return <Popover trigger={['click']} content={
     <Menu items={[
       {
         key: 'remove',

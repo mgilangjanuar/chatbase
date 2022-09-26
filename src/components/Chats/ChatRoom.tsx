@@ -8,11 +8,13 @@ import {
   MessageList
 } from '@chatscope/chat-ui-kit-react'
 import { ChatMessage, MessageContentType, TextContent, useChat } from '@chatscope/use-chat'
-import { Button, Input } from 'antd'
+import { Button, Input, Typography } from 'antd'
 import moment from 'moment'
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import useSendMessage from '../../hooks/useSendMessage'
+import { DELETED_MESSAGE_TEXT } from '../../utils/constant'
 import { ChatStyles, UserProfile } from '../../utils/types'
+import MessageActions from './MessageActions'
 import RoomActions from './RoomActions'
 
 interface Props {
@@ -23,9 +25,21 @@ interface Props {
 }
 
 export default function ({ user, style, sidebarVisible, setSidebarVisible }: Props) {
-  const { sendMessage, uploadFile, downloadFile } = useSendMessage(user)
+  const [messageInput, setMessageInput] = useState<string>()
+  const [updateMessageData, setUpdateMessageData] = useState<ChatMessage<MessageContentType.TextPlain>>()
+
+  const { sendMessage, updateMessage, uploadFile, downloadFile } = useSendMessage(user, () => {
+    setMessageInput('')
+    setUpdateMessageData(undefined)
+  })
   const { getUser, activeConversation, currentMessages } = useChat()
   const ref = useRef<any>()
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.focus()
+    }
+  }, [ref.current])
 
   const opponent = getUser(activeConversation?.participants.find(p => p.id !== user?.id)?.id || '')
   const isPersonal = activeConversation?.data.type === 'personal'
@@ -50,10 +64,28 @@ export default function ({ user, style, sidebarVisible, setSidebarVisible }: Pro
             {g.messages.map((m: ChatMessage<MessageContentType>) => {
               if (m.contentType === MessageContentType.TextPlain) {
                 return <Message key={m.id} model={{
-                  message: (m.content as TextContent).content,
+                  type: 'custom',
                   direction: m.direction,
                   position: 'normal'
-                }} />
+                }}>
+                  <Message.CustomContent>
+                    {m.content.content === DELETED_MESSAGE_TEXT ? <Typography.Text italic type="secondary">
+                      This message has been removed
+                    </Typography.Text> : <MessageActions
+                      onEditClick={() => {
+                        setMessageInput((m.content as TextContent).content.replace(/^edited\:\ /, ''))
+                        setUpdateMessageData(m)
+                      }}
+                      onRemoveClick={() => {
+                        updateMessage(m, DELETED_MESSAGE_TEXT)
+                      }}>
+                      {(m.content as TextContent).content.startsWith('edited: ') ? <Typography.Text>
+                        <Typography.Text type="secondary" italic>edited: </Typography.Text>
+                        {(m.content as TextContent).content.replace('edited: ', '')}
+                      </Typography.Text> : m.content.content}
+                    </MessageActions>}
+                  </Message.CustomContent>
+                </Message>
               } else if (m.contentType === MessageContentType.Attachment) {
                 const text: string = (m.content as any).content.replace(/^.*[\\\/]/, '').slice(14)
                 const caption = (() => {
@@ -83,8 +115,8 @@ export default function ({ user, style, sidebarVisible, setSidebarVisible }: Pro
         </MessageGroup>)}
       </MessageList>
 
-      {activeConversation && <MessageInput placeholder="Type message here"
-        onSend={sendMessage} onAttachClick={() => ref.current?.input.click()} />}
+      {activeConversation && <MessageInput placeholder="Type message here" value={messageInput} onChange={setMessageInput}
+        onSend={updateMessageData ? (value: string) => updateMessage(updateMessageData, `edited: ${value}`) : sendMessage} onAttachClick={() => ref.current?.input.click()} />}
     </ChatContainer>
     {activeConversation && <Input ref={ref} type="file" style={{ display: 'none' }} onChange={e => uploadFile(e.target.files)} />}
   </>

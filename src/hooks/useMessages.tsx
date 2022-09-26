@@ -12,6 +12,7 @@ export default function () {
       .from('chat_messages')
       .select('*')
       .eq('room_id', roomId)
+      .order('created_at', { ascending: true })
     if (!data || error) {
       notification.error({
         message: error.message,

@@ -74,6 +74,11 @@ body {
   color: #ffffff !important;
 }
 
+.cs-message-group--outgoing .cs-message-group__messages .cs-message .cs-message__content .ant-typography:not(.ant-typography-secondary) {
+  background-color: #40a9ff !important;
+  color: #ffffff !important;
+}
+
 .cs-search__input {
   font-size: 14px !important;
 }
