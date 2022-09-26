@@ -138,7 +138,7 @@ export default function ({ user, style, sidebarVisible, setSidebarVisible }: Pro
         </MessageGroup>)}
       </MessageList>
 
-      {activeConversation && <MessageInput placeholder="Type message here" value={messageInput} onChange={setMessageInput}
+      {activeConversation && <MessageInput style={{ position: 'sticky', bottom: 0 }} placeholder="Type message here" value={messageInput} onChange={setMessageInput}
         onSend={updateMessageData ? (value: string) => updateMessage(updateMessageData, `edited: ${value}`) : sendMessage} onAttachClick={() => ref.current?.input.click()} />}
     </ChatContainer>
     {activeConversation && <Input ref={ref} type="file" style={{ display: 'none' }} onChange={e => uploadFile(e.target.files)} />}
