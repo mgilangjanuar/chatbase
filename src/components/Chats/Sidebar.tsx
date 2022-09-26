@@ -8,6 +8,7 @@ import useSearch from '../../hooks/useSearch'
 import { ChatStyles, UserProfile } from '../../utils/types'
 import ResultMessages from './ResultMessages'
 import ResultUsers from './ResultUsers'
+import RoomActions from './RoomActions'
 
 interface Props {
   toggle: React.FC<any>,
@@ -34,6 +35,7 @@ export default function ({
   const [searchValue] = useDebounce(searchInput, 1000)
   const { search, users, setUsers, messages, setMessages } = useSearch()
 
+
   const {
     conversations,
     getUser,
@@ -44,11 +46,15 @@ export default function ({
   useEffect(() => {
     if (searchValue) {
       search(searchValue)
-    } else {
+    }
+  }, [searchValue])
+
+  useEffect(() => {
+    if (!searchInput) {
       setUsers(null)
       setMessages(null)
     }
-  }, [searchValue])
+  }, [searchInput])
 
   useEffect(() => {
     if (payload?.table === 'chat_rooms' && payload?.eventType === 'UPDATE') {
@@ -122,6 +128,9 @@ export default function ({
           unreadCnt={unreadCount?.[c.id]}
           onClick={() => setConversation(c)}>
           {avatar}
+          <Conversation.Operations>
+            <RoomActions />
+          </Conversation.Operations>
         </Conversation>
       })}
     </ConversationList> : <>

@@ -13,6 +13,7 @@ import moment from 'moment'
 import { useRef } from 'react'
 import useSendMessage from '../../hooks/useSendMessage'
 import { ChatStyles, UserProfile } from '../../utils/types'
+import RoomActions from './RoomActions'
 
 interface Props {
   user?: UserProfile,
@@ -38,6 +39,7 @@ export default function ({ user, style, sidebarVisible, setSidebarVisible }: Pro
         <Avatar src={isPersonal ? opponent?.avatar : activeConversation?.data.img_url} name={name} />
         <ConversationHeader.Content userName={name} info={opponent?.username} />
         <ConversationHeader.Actions>
+          <RoomActions onFinish={() => setSidebarVisible(window.innerWidth < 576)} />
         </ConversationHeader.Actions>
       </ConversationHeader>}
 

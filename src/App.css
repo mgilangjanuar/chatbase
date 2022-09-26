@@ -73,3 +73,11 @@ body {
   background-color: #40a9ff !important;
   color: #ffffff !important;
 }
+
+.cs-search__input {
+  font-size: 14px !important;
+}
+
+.ant-popover-inner-content {
+  padding: 0 !important;
+}
