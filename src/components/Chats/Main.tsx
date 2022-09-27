@@ -27,41 +27,25 @@ export default function ({ toggle, user }: Props) {
   useEffect(() => {
     document.body.style.overflowY = 'hidden'
 
-    // const setMaxHeight = () => {
-    //   // document.body.style.height = '100vh'
-    //   // document.body.style.overflowY = 'hidden'
-
-    //   // const vh = window.innerHeight * 0.01
-    //   // const element = document.querySelector('.cs-main-container.main-chat') as HTMLElement
-    //   // if (element) {
-    //   //   console.log(vh)
-    //   //   element.style.setProperty('--vh', `${vh}px`)
-    //   //   // document.body.style.setProperty('--vh', `${vh}px`)
-    //   // }
-
-    //   const doc = document.documentElement
-    //   doc.style.setProperty('--app-height', `${window.innerHeight}px`)
-    // }
-    // setMaxHeight()
-
     const setMaxHeight = () => {
-      const vh = window.innerHeight * 0.01
+      // const vh = window.innerHeight * 0.01
+      const vh = window.innerHeight
       const element = document.querySelector('.cs-main-container.main-chat') as HTMLElement
-      const messageInput = document.querySelector('.cs-message-input') as HTMLElement
+      // const messageInput = document.querySelector('.cs-message-input') as HTMLElement
       if (element) {
         console.log(vh)
-        element.style.setProperty('--vh', `${vh}px`)
+        // vh = 9
+        // element.style.setProperty('--vh', `${vh}px`)
+        // messageInput.style.bottom = '0'
+        element.style.height = `${vh}px`
 
-        if (messageInput) {
-          const viewport = window.visualViewport
-          if (viewport) {
-            const height = viewport.height
-            // if (!/iPhone|iPad|iPod/.test(window.navigator.userAgent)) {
-            // }
-            // height = viewport.height
-            messageInput.style.bottom = `${height - viewport.height}px`
-          }
-        }
+        // if (messageInput) {
+        //   const viewport = window.visualViewport
+        //   if (viewport) {
+        //     const height = viewport.height
+        //     messageInput.style.bottom = `${height - viewport.height}px`
+        //   }
+        // }
       }
     }
     setMaxHeight()
@@ -72,7 +56,6 @@ export default function ({ toggle, user }: Props) {
       setMaxHeight()
     })
     return () => {
-      // window.removeEventListener('resize', () => {})
       document.body.style.overflowY = 'auto'
     }
   }, [])
