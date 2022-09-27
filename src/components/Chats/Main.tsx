@@ -24,40 +24,38 @@ export default function ({ toggle, user }: Props) {
   const [sidebarVisible, setSidebarVisible] = useState(window.innerWidth < 576)
   const { style } = useChatStyles(sidebarVisible)
 
-  // useEffect(() => {
-  //   document.body.style.overflowY = 'hidden'
-  //   const vh = window.innerHeight * 0.01
-  //   const element = document.querySelector('.cs-main-container.main-chat') as HTMLElement
-
-  //   if (element) {
-  //     element.style.setProperty('--vh', `${vh}px`)
-  //   }
-
-  //   const setMaxHeight = () => {
-  //     const messageInput = document.querySelector('.cs-message-input') as HTMLElement
-  //     if (messageInput) {
-  //       const viewport = window.visualViewport
-  //       if (viewport) {
-  //         const height = viewport.height
-  //         messageInput.style.bottom = `${height - viewport.height}px`
-  //       }
-  //     }
-  //   }
-  //   setMaxHeight()
-
-  //   window.addEventListener('resize', () => {
-  //     setSidebarVisible(window.innerWidth < 576)
-
-  //     setMaxHeight()
-  //   })
-  //   return () => {
-  //     document.body.style.overflowY = 'auto'
-  //   }
-  // }, [])
-
   useEffect(() => {
-    if (window.innerWidth < 576) {
-      window.document.body.requestFullscreen()
+    document.body.style.overflowY = 'hidden'
+    const vh = window.innerHeight * 0.01
+    const element = document.querySelector('.cs-main-container.main-chat') as HTMLElement
+
+    if (element) {
+      element.style.setProperty('--vh', `${vh}px`)
+    }
+
+    let height = window.visualViewport?.height || 0
+    const viewport = window.visualViewport
+
+    const setMaxHeight = () => {
+      const messageInput = document.querySelector('.cs-message-input') as HTMLElement
+      if (messageInput) {
+        if (viewport) {
+          if (!/iPhone|iPad|iPod/.test(window.navigator.userAgent)) {
+            height = viewport.height
+          }
+          messageInput.style.bottom = `${height - viewport.height}px`
+        }
+      }
+    }
+    setMaxHeight()
+
+    window.addEventListener('resize', () => {
+      setSidebarVisible(window.innerWidth < 576)
+
+      setMaxHeight()
+    })
+    return () => {
+      document.body.style.overflowY = 'auto'
     }
   }, [])
 
