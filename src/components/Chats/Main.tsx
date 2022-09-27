@@ -45,15 +45,22 @@ export default function ({ toggle, user }: Props) {
     // setMaxHeight()
 
     const setMaxHeight = () => {
-      const viewport = window.visualViewport
-      if (viewport) {
-        let height = viewport.height
-        if (!/iPhone|iPad|iPod/.test(window.navigator.userAgent)) {
-          height = viewport.height
-        }
-        const element = document.querySelector('.cs-main-container.main-chat') as HTMLElement
-        if (element) {
-          element.style.height = `calc(100vh - ${height - viewport.height}px)`
+      const vh = window.innerHeight * 0.01
+      const element = document.querySelector('.cs-main-container.main-chat') as HTMLElement
+      const messageInput = document.querySelector('.cs-message-input') as HTMLElement
+      if (element) {
+        console.log(vh)
+        element.style.setProperty('--vh', `${vh}px`)
+
+        if (messageInput) {
+          const viewport = window.visualViewport
+          if (viewport) {
+            const height = viewport.height
+            // if (!/iPhone|iPad|iPod/.test(window.navigator.userAgent)) {
+            // }
+            // height = viewport.height
+            messageInput.style.bottom = `${height - viewport.height}px`
+          }
         }
       }
     }
