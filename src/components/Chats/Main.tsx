@@ -33,28 +33,28 @@ export default function ({ toggle, user }: Props) {
       element.style.setProperty('--vh', `${vh}px`)
     }
 
-    let height = window.visualViewport?.height || 0
-    const viewport = window.visualViewport
+    // let height = window.visualViewport?.height || 0
+    // const viewport = window.visualViewport
 
-    const setMaxHeight = () => {
-      const messageInput = document.querySelector('.cs-message-input') as HTMLElement
-      if (messageInput) {
-        if (viewport) {
-          if (/iPhone|iPad|iPod/.test(window.navigator.userAgent)) {
-            height = window.visualViewport?.height || 0
-          } else {
-            height = viewport.height
-          }
-          messageInput.style.bottom = `${height - viewport.height}px`
-        }
-      }
-    }
-    setMaxHeight()
+    // const setMaxHeight = () => {
+    //   const messageInput = document.querySelector('.cs-message-input') as HTMLElement
+    //   if (messageInput) {
+    //     if (viewport) {
+    //       if (/iPhone|iPad|iPod/.test(window.navigator.userAgent)) {
+    //         height = window.visualViewport?.height || 0
+    //       } else {
+    //         height = viewport.height
+    //       }
+    //       messageInput.style.bottom = `${height - viewport.height}px`
+    //     }
+    //   }
+    // }
+    // setMaxHeight()
 
     window.addEventListener('resize', () => {
       setSidebarVisible(window.innerWidth < 576)
 
-      setMaxHeight()
+      // setMaxHeight()
     })
     return () => {
       document.body.style.overflowY = 'auto'
