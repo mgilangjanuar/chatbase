@@ -40,7 +40,9 @@ export default function ({ toggle, user }: Props) {
       const messageInput = document.querySelector('.cs-message-input') as HTMLElement
       if (messageInput) {
         if (viewport) {
-          if (!/iPhone|iPad|iPod/.test(window.navigator.userAgent)) {
+          if (/iPhone|iPad|iPod/.test(window.navigator.userAgent)) {
+            height = window.visualViewport?.height || 0
+          } else {
             height = viewport.height
           }
           messageInput.style.bottom = `${height - viewport.height}px`

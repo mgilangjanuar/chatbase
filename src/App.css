@@ -95,7 +95,7 @@ html {
 
 .cs-main-container.main-chat {
   height: 100vh;
-  /* height: calc(var(--vh, 0) * 100); */
+  height: calc(var(--vh, 0) * 100);
   /* height: -webkit-fill-available; */
   /* height: calc(100vh - calc(100vh - 100%)); */
   /* height: var(--app-height); */
