@@ -26,26 +26,21 @@ export default function ({ toggle, user }: Props) {
 
   useEffect(() => {
     document.body.style.overflowY = 'hidden'
+    const vh = window.innerHeight * 0.01
+    const element = document.querySelector('.cs-main-container.main-chat') as HTMLElement
+
+    if (element) {
+      element.style.setProperty('--vh', `${vh}px`)
+    }
 
     const setMaxHeight = () => {
-      // const vh = window.innerHeight * 0.01
-      const vh = window.innerHeight
-      const element = document.querySelector('.cs-main-container.main-chat') as HTMLElement
-      // const messageInput = document.querySelector('.cs-message-input') as HTMLElement
-      if (element) {
-        console.log(vh)
-        // vh = 9
-        // element.style.setProperty('--vh', `${vh}px`)
-        // messageInput.style.bottom = '0'
-        element.style.height = `${vh}px`
-
-        // if (messageInput) {
-        //   const viewport = window.visualViewport
-        //   if (viewport) {
-        //     const height = viewport.height
-        //     messageInput.style.bottom = `${height - viewport.height}px`
-        //   }
-        // }
+      const messageInput = document.querySelector('.cs-message-input') as HTMLElement
+      if (messageInput) {
+        const viewport = window.visualViewport
+        if (viewport) {
+          const height = viewport.height
+          messageInput.style.bottom = `${height - viewport.height}px`
+        }
       }
     }
     setMaxHeight()
