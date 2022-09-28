@@ -28,12 +28,9 @@ export default function ({ toggle, user }: Props) {
     // document.body.style.overflowY = 'hidden'
 
     const setMaxHeight = () => {
-      const vh = window.innerHeight * 0.01
+      const vh = window.innerHeight
       document.documentElement.style.setProperty('--vh', `${vh}px`)
-      const element = document.querySelector('.chat-container-wrapper') as HTMLElement
-      if (element) {
-        element.style.setProperty('--vh', `${vh}px`)
-      }
+      document.querySelector(':root')?.style.setProperty('--vh', `${vh}px‘)
     }
     setMaxHeight()
 
