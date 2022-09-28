@@ -30,7 +30,7 @@ export default function ({ toggle, user }: Props) {
     const setMaxHeight = () => {
       const vh = window.innerHeight
       document.documentElement.style.setProperty('--vh', `${vh}px`)
-      document.querySelector(':root')?.style.setProperty('--vh', `${vh}px`)
+      // document.querySelector(':root')?.style.setProperty('--vh', `${vh}px`)
     }
     setMaxHeight()
 
