@@ -52,7 +52,7 @@ export default function ({ toggle, user }: Props) {
       }
     }
     x()
-    window.addEventListener('resize', x)
+    // window.addEventListener('resize', x)
   }, [])
 
   useEffect(() => {
