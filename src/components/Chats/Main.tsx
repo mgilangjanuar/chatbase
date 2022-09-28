@@ -44,18 +44,20 @@ export default function ({ toggle, user }: Props) {
   //   }
   // }, [])
 
-  // useEffect(() => {
-  //   const x = () => {
-  //     const wrapper = document.querySelector('.chat-container-wrapper') as HTMLElement
-  //     if (wrapper) {
-  //       // wrapper.style.height = `${window.visualViewport?.height || window.innerHeight}px`
-  //       // wrapper.style.height = `${window.innerHeight}px`
-  //       wrapper.style.height = '100vh'
-  //     }
-  //   }
-  //   x()
-  //   // window.addEventListener('resize', x)
-  // }, [])
+  useEffect(() => {
+    // const x = () => {
+    //   const wrapper = document.querySelector('.chat-container-wrapper') as HTMLElement
+    //   if (wrapper) {
+    //     // wrapper.style.height = `${window.visualViewport?.height || window.innerHeight}px`
+    //     // wrapper.style.height = `${window.innerHeight}px`
+    //     wrapper.style.height = '100vh'
+    //   }
+    // }
+    // x()
+    // window.addEventListener('resize', x)
+
+    setTimeout(() => window.scrollTo(0, 1), 1500)
+  }, [])
 
   useEffect(() => {
     init()

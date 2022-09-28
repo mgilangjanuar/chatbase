@@ -105,8 +105,12 @@ html {
 .chat-container-wrapper {
   position: relative;
   height: 100vh;
-  height: -webkit-fill-available;
+  /* height: -webkit-fill-available; */
 }
+
+/* .cs-main-container.main-chat {
+  height: -webkit-fill-available;
+} */
 
 .video-container {
   position: relative;
