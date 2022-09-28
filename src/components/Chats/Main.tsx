@@ -48,7 +48,8 @@ export default function ({ toggle, user }: Props) {
     const x = () => {
       const wrapper = document.querySelector('.chat-container-wrapper') as HTMLElement
       if (wrapper) {
-        wrapper.style.height = `${window.visualViewport?.height || window.innerHeight}px`
+        // wrapper.style.height = `${window.visualViewport?.height || window.innerHeight}px`
+        wrapper.style.height = `${window.innerHeight}px`
       }
     }
     x()
