@@ -26,35 +26,21 @@ export default function ({ toggle, user }: Props) {
 
   useEffect(() => {
     // document.body.style.overflowY = 'hidden'
-    const vh = window.innerHeight * 0.01
-    const element = document.querySelector('.chat-container-wrapper') as HTMLElement
 
-    if (element) {
-      element.style.setProperty('--vh', `${vh}px`)
+    const setMaxHeight = () => {
+      const vh = window.innerHeight * 0.01
+      document.documentElement.style.setProperty('--vh', `${vh}px`)
+      const element = document.querySelector('.chat-container-wrapper') as HTMLElement
+      if (element) {
+        element.style.setProperty('--vh', `${vh}px`)
+      }
     }
-
-    // let height = window.visualViewport?.height || 0
-    // const viewport = window.visualViewport
-
-    // const setMaxHeight = () => {
-    //   const messageInput = document.querySelector('.cs-message-input') as HTMLElement
-    //   if (messageInput) {
-    //     if (viewport) {
-    //       if (/iPhone|iPad|iPod/.test(window.navigator.userAgent)) {
-    //         height = window.visualViewport?.height || 0
-    //       } else {
-    //         height = viewport.height
-    //       }
-    //       messageInput.style.bottom = `${height - viewport.height}px`
-    //     }
-    //   }
-    // }
-    // setMaxHeight()
+    setMaxHeight()
 
     window.addEventListener('resize', () => {
       setSidebarVisible(window.innerWidth < 576)
 
-      // setMaxHeight()
+      setMaxHeight()
     })
     return () => {
       // document.body.style.overflowY = 'auto'
