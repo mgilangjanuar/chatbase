@@ -104,8 +104,8 @@ html {
 
 .chat-container-wrapper {
   position: relative;
-  height: 100vh;
-  height: var(--vh);
+  /* height: 100vh;
+  height: var(--vh); */
 }
 
 .video-container {

@@ -24,24 +24,35 @@ export default function ({ toggle, user }: Props) {
   const [sidebarVisible, setSidebarVisible] = useState(window.innerWidth < 576)
   const { style } = useChatStyles(sidebarVisible)
 
+  // useEffect(() => {
+  //   // document.body.style.overflowY = 'hidden'
+
+  //   const setMaxHeight = () => {
+  //     const vh = window.innerHeight
+  //     document.documentElement.style.setProperty('--vh', `${vh}px`)
+  //     // document.querySelector(':root')?.style.setProperty('--vh', `${vh}px`)
+  //   }
+  //   setMaxHeight()
+
+  //   window.addEventListener('resize', () => {
+  //     setSidebarVisible(window.innerWidth < 576)
+
+  //     setMaxHeight()
+  //   })
+  //   return () => {
+  //     // document.body.style.overflowY = 'auto'
+  //   }
+  // }, [])
+
   useEffect(() => {
-    // document.body.style.overflowY = 'hidden'
-
-    const setMaxHeight = () => {
-      const vh = window.innerHeight
-      document.documentElement.style.setProperty('--vh', `${vh}px`)
-      // document.querySelector(':root')?.style.setProperty('--vh', `${vh}px`)
+    const x = () => {
+      const wrapper = document.querySelector('.chat-container-wrapper') as HTMLElement
+      if (wrapper) {
+        wrapper.style.height = `${window.visualViewport?.height || window.innerHeight}px`
+      }
     }
-    setMaxHeight()
-
-    window.addEventListener('resize', () => {
-      setSidebarVisible(window.innerWidth < 576)
-
-      setMaxHeight()
-    })
-    return () => {
-      // document.body.style.overflowY = 'auto'
-    }
+    x()
+    window.addEventListener('resize', x)
   }, [])
 
   useEffect(() => {
@@ -51,7 +62,7 @@ export default function ({ toggle, user }: Props) {
     }
   }, [])
 
-  return <div className="chat-container-wrapper" style={{ position: 'relative', height: '100vh' }}>
+  return <div className="chat-container-wrapper" style={{ position: 'relative' }}>
     <MainContainer className="main-chat" responsive>
       <Sidebar
         user={user}
