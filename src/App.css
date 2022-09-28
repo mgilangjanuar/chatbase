@@ -93,14 +93,14 @@ html {
   padding: 0 !important;
 }
 
-.cs-main-container.main-chat {
+/* .cs-main-container.main-chat {
   height: 100vh;
   height: calc(var(--vh, 0) * 100);
-  /* height: -webkit-fill-available; */
-  /* height: calc(100vh - calc(100vh - 100%)); */
-  /* height: var(--app-height); */
+  height: -webkit-fill-available;
+  height: calc(100vh - calc(100vh - 100%));
+  height: var(--app-height);
   bottom: 0;
-}
+} */
 
 .video-container {
   position: relative;
