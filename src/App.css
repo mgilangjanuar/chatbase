@@ -102,6 +102,12 @@ html {
   bottom: 0;
 } */
 
+.chat-container-wrapper {
+  position: relative;
+  height: 100vh;
+  height: calc(var(--vh, 0) * 100);
+}
+
 .video-container {
   position: relative;
   padding-bottom: 56.25%;
