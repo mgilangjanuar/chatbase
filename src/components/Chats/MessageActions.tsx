@@ -11,19 +11,20 @@ interface Props {
 }
 
 export default function ({ children, direction, onlyDelete, onEditClick, onRemoveClick }: Props) {
-  return direction === MessageDirection.Outgoing ? <Popover children={children} placement="left" trigger={['click']} content={<Menu items={[
-    ...!onlyDelete ? [{
-      key: 'edit',
-      label: 'Edit',
-      icon: <EditOutlined />,
-      onClick: onEditClick
-    }] : [],
-    {
-      key: 'remove',
-      label: 'Remove',
-      icon: <DeleteOutlined />,
-      danger: true,
-      onClick: onRemoveClick
-    }
-  ]} />} /> : children
+  return direction === MessageDirection.Outgoing ? <Popover children={children} placement="left" trigger={['click']} content={
+    <Menu style={{ margin: '-12px -16px' }} items={[
+      ...!onlyDelete ? [{
+        key: 'edit',
+        label: 'Edit',
+        icon: <EditOutlined />,
+        onClick: onEditClick
+      }] : [],
+      {
+        key: 'remove',
+        label: 'Remove',
+        icon: <DeleteOutlined />,
+        danger: true,
+        onClick: onRemoveClick
+      }
+    ]} />} /> : children
 }
