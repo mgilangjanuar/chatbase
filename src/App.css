@@ -97,10 +97,12 @@ body {
 } */
 
 .chat-container-wrapper {
-  position: relative;
-  /* height: calc(100vh - calc(100vh - 100%)); */
+  position: fixed;
+  /* position: relative; */
   height: 100vh;
-  height: calc(var(--vh, 1vh) * 100);
+  bottom: 0;
+  /* height: calc(100vh - calc(100vh - 100%)); */
+  /* height: calc(var(--vh, 1vh) * 100); */
   /* height: -webkit-fill-available; */
 }
 
