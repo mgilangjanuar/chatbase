@@ -54,9 +54,18 @@ export default function ({ toggle, user }: Props) {
   //   appHeight()
   // }, [])
 
-  // useEffect(() => {
-  //   document.documentElement.style.setProperty('--vh', window.innerHeight * 0.01 + 'px')
-  // }, [])
+  useEffect(() => {
+    const element = document.querySelector('chat-container-wrapper') as any
+    if (element) {
+      if (element.requestFullscreen) {
+        element.requestFullscreen()
+      } else if (element.webkitRequestFullscreen) {
+        element.webkitRequestFullscreen()
+      } else if (element.msRequestFullscreen) {
+        element.msRequestFullscreen()
+      }
+    }
+  }, [])
 
   useEffect(() => {
     init()
