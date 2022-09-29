@@ -55,6 +55,10 @@ export default function ({ toggle, user }: Props) {
   // }, [])
 
   useEffect(() => {
+    document.documentElement.style.setProperty('--vh', window.innerHeight * 0.01 + 'px')
+  }, [])
+
+  useEffect(() => {
     init()
     return () => {
       supabase.removeAllSubscriptions()

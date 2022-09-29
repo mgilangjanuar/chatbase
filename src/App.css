@@ -97,10 +97,9 @@ body {
 } */
 
 .chat-container-wrapper {
-  position: fixed;
-  /* position: relative; */
+  position: relative;
   height: 100vh;
-  bottom: 0;
+  height: calc(var(--vh) * 100);
   /* height: calc(100vh - calc(100vh - 100%)); */
   /* height: calc(var(--vh, 1vh) * 100); */
   /* height: -webkit-fill-available; */
