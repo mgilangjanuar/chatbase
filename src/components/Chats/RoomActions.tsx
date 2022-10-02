@@ -12,7 +12,7 @@ export default function ({ onFinish }: Props) {
   const { remove: removeRoom } = useRemoveRoom(removeConversation, onFinish)
 
   return <Popover trigger={['click']} content={
-    <Menu items={[
+    <Menu style={{ margin: '-12px -16px' }} items={[
       {
         key: 'remove',
         danger: true,
