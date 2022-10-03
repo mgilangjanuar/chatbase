@@ -41,7 +41,10 @@ export default function (user?: UserProfile, onFinish?: () => void) {
 
     await supabase
       .from('chat_rooms')
-      .update({ last_message: `${user?.profile.username}: ${msg}` })
+      .update({
+        last_message: `${user?.profile.username}: ${msg}`,
+        updated_at: new Date().toISOString()
+      })
       .eq('id', activeConversation.id)
     onFinish?.()
   }
@@ -116,7 +119,10 @@ export default function (user?: UserProfile, onFinish?: () => void) {
 
     await supabase
       .from('chat_rooms')
-      .update({ last_message: `${user?.profile.username}: File` })
+      .update({
+        last_message: `${user?.profile.username}: File`,
+        updated_at: new Date().toISOString()
+      })
       .eq('id', activeConversation.id)
     onFinish?.()
   }
@@ -131,7 +137,14 @@ export default function (user?: UserProfile, onFinish?: () => void) {
     })
     notification.close(key)
     onFinish?.()
-    return URL.createObjectURL(data)
+    const url = URL.createObjectURL(data)
+    const link = document.createElement('a')
+    link.href = url
+    link.setAttribute('download', key.replace(/^.*[\\\/]/, '').slice(14))
+    document.body.appendChild(link)
+    link.click()
+    link.remove()
+    URL.revokeObjectURL(url)
   }
 
   return { sendMessage, updateMessage, uploadFile, downloadFile }

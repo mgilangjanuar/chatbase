@@ -12,6 +12,7 @@ export default function () {
         const { data, error } = await supabase
           .from('chat_rooms')
           .select('*')
+          .order('updated_at', { ascending: false })
         if (!data || error) {
           notification.error({
             message: error.message,

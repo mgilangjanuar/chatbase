@@ -9,7 +9,6 @@ import {
 } from '@chatscope/chat-ui-kit-react'
 import { ChatMessage, MessageContentType, TextContent, useChat } from '@chatscope/use-chat'
 import { Button, Input, Space, Typography } from 'antd'
-import moment from 'moment'
 import { useEffect, useRef, useState } from 'react'
 import useSendMessage from '../../hooks/useSendMessage'
 import { DELETED_MESSAGE_TEXT } from '../../utils/constant'
@@ -83,6 +82,8 @@ export default function ({ user, style, sidebarVisible, setSidebarVisible }: Pro
                 }}>
                   <Message.CustomContent>
                     <MessageActions
+                      content={m.content.content as string}
+                      createdTime={m.createdTime}
                       direction={m.direction}
                       onEditClick={() => {
                         setMessageInput((m.content as TextContent).content.replace(/^edited\:\ /, ''))
@@ -93,8 +94,8 @@ export default function ({ user, style, sidebarVisible, setSidebarVisible }: Pro
                       }}>
                       {(m.content as TextContent).content.startsWith('edited: ') ? <Typography.Text>
                         <Typography.Text type="secondary" italic>edited: </Typography.Text>
-                        {(m.content as TextContent).content.replace('edited: ', '')}
-                      </Typography.Text> : m.content.content}
+                        <span dangerouslySetInnerHTML={{ __html: (m.content as TextContent).content.replace('edited: ', '') }} />
+                      </Typography.Text> : <span dangerouslySetInnerHTML={{ __html: m.content.content as string }} />}
                     </MessageActions>
                   </Message.CustomContent>
                 </Message>
@@ -113,11 +114,9 @@ export default function ({ user, style, sidebarVisible, setSidebarVisible }: Pro
                 }}>
                   <Message.CustomContent>
                     <Space>
-                      <Button type="primary" onClick={async () => {
-                        const url = await downloadFile((m.content as any).content)
-                        window.open(url as string, '_blank')
-                      }} shape="circle" icon={<CloudDownloadOutlined />} />
+                      <Button type="primary" onClick={async () => await downloadFile((m.content as any).content)} shape="circle" icon={<CloudDownloadOutlined />} />
                       <MessageActions onlyDelete
+                        createdTime={m.createdTime}
                         direction={m.direction}
                         onEditClick={() => {
                           setMessageInput((m.content as TextContent).content.replace(/^edited\:\ /, ''))
@@ -134,7 +133,6 @@ export default function ({ user, style, sidebarVisible, setSidebarVisible }: Pro
               }
             })}
           </MessageGroup.Messages>
-          <MessageGroup.Footer>{moment(g.messages[g.messages.length - 1].createdTime).fromNow()}</MessageGroup.Footer>
         </MessageGroup>)}
       </MessageList>
 
